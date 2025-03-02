@@ -1,0 +1,6 @@
+@FDBInsights_HostAddress = http://localhost:5090
+
+GET {{FDBInsights_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

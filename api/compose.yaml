@@ -1,0 +1,6 @@
+﻿services:
+  fdbinsights:
+    image: fdbinsights
+    build:
+      context: .
+      dockerfile: FDBInsights/Dockerfile

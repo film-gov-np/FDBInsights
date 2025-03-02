@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D4A393D5-D92A-43F7-889F-3B09950CAA20}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{62F26B8E-E269-4021-8A0B-FF7606E9D64A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FDBInsights", "FDBInsights\FDBInsights.csproj", "{9B84D5C0-67A7-4E36-8AE1-959045E5074A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{21885918-E334-458D-A5AE-00FE4CB65DE2}"
+	ProjectSection(SolutionItems) = preProject
+		compose.yaml = compose.yaml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9B84D5C0-67A7-4E36-8AE1-959045E5074A} = {D4A393D5-D92A-43F7-889F-3B09950CAA20}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9B84D5C0-67A7-4E36-8AE1-959045E5074A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B84D5C0-67A7-4E36-8AE1-959045E5074A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B84D5C0-67A7-4E36-8AE1-959045E5074A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B84D5C0-67A7-4E36-8AE1-959045E5074A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
