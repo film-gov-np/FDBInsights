@@ -18,4 +18,6 @@ public class User : BaseEntity
     private string PasswordHash { get; }
     private string Role { get; }
     private DateTime? LastLogin { get; }
+    public string GetEmail => Email;
+    public string GetUsername => Username;
 }
