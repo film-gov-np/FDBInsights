@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/emblem_nepal.png'
+import mainLogo from '/emblem_nepal.png'
 import './App.css'
 
 function App() {
@@ -9,7 +8,7 @@ function App() {
   return (
     <>
       <div>
-        <img src={viteLogo} className="logo" alt="Vite logo" />
+        <img src={mainLogo} className="logo" alt="NMDB Insights" />
       </div>
       <h1>NMDB Insights</h1>
     </>
