@@ -1,10 +1,14 @@
+import { Paths } from "@/constants/routePaths";
+import axiosInstance from "@/helpers/axiosSetup";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 const ErrorMessage = ({ message }) => (
   <p className="text-red-500 text-sm">{message}</p>
 );
 
 const LoginForm = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -18,8 +22,24 @@ const LoginForm = () => {
     /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
   const onSubmit = (data) => {
-    console.log(data);
-    alert("Login successful!");
+    const { email, password } = data;
+    const postData = {
+      email: email,
+      password: password,
+    };
+    axiosInstance
+      .post("/user/authenticate", postData)
+      .then((resp) => {
+        const response = resp.data;
+        if (response?.success) {
+          navigate(Paths.Route_Dashboard);
+        } else {
+
+        }
+      })
+      .catch((error) => {
+        //to show error message
+      });
   };
 
   return (
@@ -44,9 +64,8 @@ const LoginForm = () => {
                   message: "Invalid email address",
                 },
               })}
-              className={`w-full px-3 py-2 border rounded focus:outline-none focus:border-blue-500 ${
-                errors.email ? "border-red-500" : "border-gray-300"
-              }`}
+              className={`w-full px-3 py-2 border rounded focus:outline-none focus:border-blue-500 ${errors.email ? "border-red-500" : "border-gray-300"
+                }`}
             />
             {errors.email && <ErrorMessage message={errors.email.message} />}
           </div>
@@ -75,9 +94,8 @@ const LoginForm = () => {
                   return true;
                 },
               })}
-              className={`w-full px-3 py-2 border rounded focus:outline-none focus:border-blue-500 ${
-                errors.password ? "border-red-500" : "border-gray-300"
-              }`}
+              className={`w-full px-3 py-2 border rounded focus:outline-none focus:border-blue-500 ${errors.password ? "border-red-500" : "border-gray-300"
+                }`}
             />
             {errors.password && (
               <div className="text-red-500 text-sm">

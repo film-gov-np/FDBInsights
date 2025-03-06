@@ -1,6 +1,4 @@
 import { useState } from "react";
-import mainLogo from "/emblem_nepal.png";
-import "./App.css";
 import Login from "./components/Login";
 
 function App() {
@@ -8,11 +6,6 @@ function App() {
 
   return (
     <div>
-      <div>
-        <img src={mainLogo} className="logo" alt="NMDB Insights" />
-      </div>
-
-      <h1>NMDB Insights</h1>
       <Login />
     </div>
   );
