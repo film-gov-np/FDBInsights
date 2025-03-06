@@ -1,7 +1,8 @@
-import { Paths } from "@/constants/routePaths";
-import axiosInstance from "@/helpers/axiosSetup";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { Paths } from "@/constants/routePaths";
+import axiosInstance from "@/helpers/axiosSetup";
 
 const ErrorMessage = ({ message }) => (
   <p className="text-red-500 text-sm">{message}</p>
@@ -13,13 +14,9 @@ const LoginForm = () => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    getValues,
   } = useForm({
     mode: "onSubmit",
   });
-
-  const passwordRegex =
-    /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
   const onSubmit = (data) => {
     const { email, password } = data;
@@ -34,16 +31,16 @@ const LoginForm = () => {
         if (response?.success) {
           navigate(Paths.Route_Dashboard);
         } else {
-
+          // Handle unsuccessful login
         }
       })
       .catch((error) => {
-        //to show error message
+        // Show error message
       });
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+    <div className=" grid place-items-center ">
       <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -59,13 +56,10 @@ const LoginForm = () => {
               id="email"
               {...register("email", {
                 required: "Email is required",
-                pattern: {
-                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                  message: "Invalid email address",
-                },
               })}
-              className={`w-full px-3 py-2 border rounded focus:outline-none focus:border-blue-500 ${errors.email ? "border-red-500" : "border-gray-300"
-                }`}
+              className={`w-full px-3 py-2 border rounded focus:outline-none focus:border-blue-500 ${
+                errors.email ? "border-red-500" : "border-gray-300"
+              }`}
             />
             {errors.email && <ErrorMessage message={errors.email.message} />}
           </div>
@@ -81,38 +75,13 @@ const LoginForm = () => {
               id="password"
               {...register("password", {
                 required: "Password is required",
-                pattern: {
-                  value: passwordRegex,
-                  message:
-                    "Password must be at least 8 characters long and include at least one uppercase letter, one number, and one special character.",
-                },
-                validate: (value) => {
-                  const email = getValues("email");
-                  if (value === email) {
-                    return "Email and password cannot be the same";
-                  }
-                  return true;
-                },
               })}
-              className={`w-full px-3 py-2 border rounded focus:outline-none focus:border-blue-500 ${errors.password ? "border-red-500" : "border-gray-300"
-                }`}
+              className={`w-full px-3 py-2 border rounded focus:outline-none focus:border-blue-500 ${
+                errors.password ? "border-red-500" : "border-gray-300"
+              }`}
             />
             {errors.password && (
-              <div className="text-red-500 text-sm">
-                {errors.password.type === "validate" && (
-                  <ErrorMessage message={errors.password.message} />
-                )}
-                {errors.password.type === "pattern" && (
-                  <ul className="list-disc list-inside">
-                    <li>Password must be at least 8 characters long</li>
-                    <li>Include at least one uppercase letter</li>
-                    <li>Include at least one number</li>
-                    <li>
-                      Include at least one special character (e.g., @$!%*?&)
-                    </li>
-                  </ul>
-                )}
-              </div>
+              <ErrorMessage message={errors.password.message} />
             )}
           </div>
 

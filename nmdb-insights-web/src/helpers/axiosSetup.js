@@ -2,7 +2,6 @@ import { BaseAPIUrl } from "@/constants/authConstant";
 import { Paths } from "@/constants/routePaths";
 import axios from "axios";
 
-
 const axiosInstance = axios.create({
   baseURL: BaseAPIUrl,
   withCredentials: true,
@@ -15,7 +14,7 @@ axiosInstance.interceptors.request.use(
   },
   function (error) {
     return Promise.reject(error);
-  },
+  }
 );
 
 let isRefreshing = false;
@@ -44,7 +43,7 @@ axiosInstance.interceptors.response.use(
       location.href = Paths.Route_Home;
     }
     return Promise.reject(error);
-  },
+  }
 );
 
 export default axiosInstance;
