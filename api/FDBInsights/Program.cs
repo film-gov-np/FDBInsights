@@ -1,26 +1,33 @@
+using FastEndpoints;
 using FDBInsights.Data;
 using FDBInsights.Repositories;
 using FDBInsights.Repositories.Implementation;
-using FluentValidation;
+using FDBInsights.Service;
+using FDBInsights.Service.Implementation;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Configure database
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    //options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-    options.UseSqlServer(builder.Configuration["ConnectionString"]));
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        sqlServerOptions => sqlServerOptions.EnableRetryOnFailure()
+    )
+);
 
+// Add FastEndpoints
+builder.Services.AddFastEndpoints();
+
+// Register application services
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
+
+// Add controllers for backward compatibility (can be removed if fully migrating to FastEndpoints)
 builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
-builder.Services.AddTransient<IUserRepository, UserRepository>();
-// Add MediatR
-builder.Services.AddMediatR(cfg =>
-    cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
-// Add FluentValidation
-builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -30,10 +37,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"); });
 }
 
-app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
+app.UseHttpsRedirection();
+app.UseFastEndpoints(c => { c.Endpoints.RoutePrefix = "api"; });
 
+// Keep controllers for backward compatibility
 app.MapControllers();
 
 app.Run();
