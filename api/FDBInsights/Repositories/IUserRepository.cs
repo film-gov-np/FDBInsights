@@ -1,8 +1,8 @@
-using FDBInsights.Models;
+using FDBInsights.Dto;
 
 namespace FDBInsights.Repositories;
 
 public interface IUserRepository
 {
-    Task<User?> GetByEmailAsync(string email);
+    Task<UserInfo?> GetByEmailAsync(string email);
 }
