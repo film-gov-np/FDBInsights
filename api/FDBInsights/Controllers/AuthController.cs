@@ -7,11 +7,11 @@ namespace FDBInsights.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class AuthController : ControllerBase
+public class SampleController : ControllerBase
 {
     private readonly IMediator _mediator;
 
-    public AuthController(IMediator mediator)
+    public SampleController(IMediator mediator)
     {
         _mediator = mediator;
     }
