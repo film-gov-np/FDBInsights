@@ -1,13 +1,13 @@
 import { useState } from "react";
-import Login from "./components/Login";
+import { LoginForm } from "./components/ui/login";
 
 function App() {
   const [count, setCount] = useState(0);
 
   return (
-    <div>
-      <Login />
-    </div>
+    <>
+      <LoginForm />
+    </>
   );
 }
 

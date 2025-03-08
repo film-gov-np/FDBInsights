@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Paths } from "@/constants/routePaths";
 import axiosInstance from "@/helpers/axiosSetup";
 import { cn } from "@/lib/utils";
@@ -72,15 +72,16 @@ export function LoginForm({ className, ...props }) {
                   <ErrorMessage message={errors.email.message} />
                 )}
               </div>
+
               <div className="grid gap-2">
                 <div className="flex items-center justify-between">
                   <Label htmlFor="password">Password</Label>
-                  <a
-                    href="#"
+                  <Link
+                    to="#"
                     className="text-xs sm:text-sm underline-offset-2 hover:underline"
                   >
                     Forgot your password?
-                  </a>
+                  </Link>
                 </div>
                 <Input
                   id="password"
@@ -100,12 +101,6 @@ export function LoginForm({ className, ...props }) {
               <Button type="submit" className="w-full" disabled={isSubmitting}>
                 {isSubmitting ? "Logging in..." : "Login"}
               </Button>
-              <div className="text-center text-xs sm:text-sm">
-                Don&apos;t have an account?{" "}
-                <a href="#" className="underline underline-offset-4">
-                  Sign up
-                </a>
-              </div>
             </div>
           </form>
         </CardContent>
