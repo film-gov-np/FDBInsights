@@ -28,29 +28,38 @@ export function LoginForm({ className, ...props }) {
       .post("/user/authenticate", data)
       .then((response) => {
         if (response.data?.success) {
-          reset();
+          reset(); // Reset the form fields
           navigate(Paths.Route_Dashboard);
         } else {
           console.error("Login unsuccessful");
+          reset(); // Reset the form fields even if login is unsuccessful
         }
       })
       .catch((error) => {
         console.error("Login error:", error);
+        reset(); // Reset the form fields in case of an error
       });
   };
 
   return (
     <div
-      className={cn("flex flex-col gap-6 w-full max-w-md mx-auto", className)}
+      className={cn(
+        "flex flex-col gap-6 w-full max-w-md mx-auto p-4",
+        className
+      )}
       {...props}
     >
       <Card className="overflow-hidden w-full">
-        <CardContent className="p-6 sm:p-8">
+        <CardContent className="p-6">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-6">
               <div className="flex flex-col items-center text-center">
-                <h1 className="text-2xl sm:text-3xl font-bold">Welcome back</h1>
-                <p className="text-sm sm:text-base text-balance text-muted-foreground">
+                <img
+                  src="/emblem_nepal.png"
+                  alt="Emblem of Nepal"
+                  className="w-24 h-24"
+                />
+                <p className="mt-3 text-sm text-balance text-muted-foreground">
                   Login to your NMDB account
                 </p>
               </div>
@@ -78,7 +87,7 @@ export function LoginForm({ className, ...props }) {
                   <Label htmlFor="password">Password</Label>
                   <Link
                     to="#"
-                    className="text-xs sm:text-sm underline-offset-2 hover:underline"
+                    className="text-xs underline-offset-2 hover:underline"
                   >
                     Forgot your password?
                   </Link>
