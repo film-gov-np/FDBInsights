@@ -14,7 +14,7 @@ const ErrorMessage = ({ message }) => (
   <p className="text-red-500 text-sm mt-1">{message}</p>
 );
 
-export function LoginForm({ className, ...props }) {
+export default function LoginForm({ className, ...props }) {
   const navigate = useNavigate();
   const {
     register,
