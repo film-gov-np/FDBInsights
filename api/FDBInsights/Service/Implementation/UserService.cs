@@ -11,4 +11,9 @@ public class UserService(IUserRepository userRepository) : IUserService
     {
         return _userRepository.GetByEmailAsync(email);
     }
+
+    public Task<UserInfo?> GetByUserNameAsync(string userName)
+    {
+        return _userRepository.GetByUserNameAsync(userName);
+    }
 }
