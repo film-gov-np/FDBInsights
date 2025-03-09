@@ -1,4 +1,3 @@
-using FDBInsights.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace FDBInsights.Data;
@@ -9,5 +8,5 @@ public class ApplicationDbContext : DbContext
     {
     }
 
-    public DbSet<User> Users => Set<User>();
+    public DbSet<User> Users { get; set; }
 }
