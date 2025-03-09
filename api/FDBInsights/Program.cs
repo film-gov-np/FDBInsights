@@ -3,6 +3,7 @@ using FDBInsights.Common;
 using FDBInsights.Data;
 using FDBInsights.Repositories;
 using FDBInsights.Repositories.Implementation;
+using FDBInsights.Security;
 using FDBInsights.Service;
 using FDBInsights.Service.Implementation;
 using Microsoft.EntityFrameworkCore;
@@ -17,20 +18,38 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     )
 );
 
+// Add ASP.NET Identity
+// builder.Services.AddIdentity<User, IdentityRole>(options =>
+//     {
+//         options.Password.RequireDigit = true;
+//         options.Password.RequireLowercase = true;
+//         options.Password.RequireUppercase = true;
+//         options.Password.RequireNonAlphanumeric = true;
+//         options.Password.RequiredLength = 8;
+//     })
+//     .AddEntityFrameworkStores<ApplicationDbContext>()
+//     .AddDefaultTokenProviders();
+
+// Configure JWT settings
+builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection(JwtSettings.Section));
 // Add FastEndpoints
 builder.Services.AddFastEndpoints();
 
 // Register application services
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddLogging();
+builder.Services.AddScoped<JwtSettings>();
 builder.Services.AddScoped<BaseEndpointCore>();
+builder.Services.AddSingleton<IMapper, AppMapper>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+
 
 // Add controllers for backward compatibility (can be removed if fully migrating to FastEndpoints)
-builder.Services.AddControllers();
+//builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
+
 
 var app = builder.Build();
 

@@ -1,5 +1,5 @@
 using FDBInsights.Data;
-using FDBInsights.Dto;
+using FDBInsights.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace FDBInsights.Repositories.Implementation;
@@ -8,20 +8,21 @@ public class UserRepository(ApplicationDbContext dbContext) : IUserRepository
 {
     private readonly ApplicationDbContext _dbContext = dbContext;
 
-    public async Task<UserInfo?> GetByEmailAsync(string email)
+    public async Task<User?> GetByEmailAsync(string email)
     {
         var user = await _dbContext.Users
             .FirstOrDefaultAsync(u => u.Email == email);
         if (user == null) return null;
-        return new UserInfo(user.Email, user.FullName, null);
+        return user;
     }
 
-    public async Task<UserInfo?> GetByUserNameAsync(string userName)
+    public async Task<User?> GetByUserNameAsync(string userName)
     {
         var user = await _dbContext.Users
             .AsNoTracking()
-            .FirstOrDefaultAsync(u => u.UserName == userName);
+            .Where(u => u.UserName == userName)
+            .FirstOrDefaultAsync();
         if (user == null) return null;
-        return new UserInfo(user.Email, user.FullName, null);
+        return user;
     }
 }
