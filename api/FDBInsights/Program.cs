@@ -1,4 +1,5 @@
 using FastEndpoints;
+using FDBInsights.Common;
 using FDBInsights.Data;
 using FDBInsights.Repositories;
 using FDBInsights.Repositories.Implementation;
@@ -20,6 +21,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddFastEndpoints();
 
 // Register application services
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddLogging();
+builder.Services.AddScoped<BaseEndpointCore>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 
