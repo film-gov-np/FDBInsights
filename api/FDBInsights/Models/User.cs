@@ -1,23 +1,33 @@
-using FDBInsights.Common;
-
 namespace FDBInsights.Models;
 
-public class User : BaseEntity
+public class User
 {
-    public User(string username, string email, string passwordHash, string role, DateTime? lastLogin)
-    {
-        Username = username;
-        Email = email;
-        PasswordHash = passwordHash;
-        Role = role;
-        LastLogin = lastLogin;
-    }
+    public int UserID { get; private set; }
+    public string UserCode { get; private set; }
+    public string FullName { get; set; }
+    public string Email { get; private set; }
+    public string UserName { get; set; }
+    public string Password { get; }
+    public string Address { get; }
+    public string Phone { get; }
+    public string Mobile { get; }
+    public string RoleID { get; }
+    public string Image { get; }
+    public DateTime? ExpiryDate { get; }
+    public int? StatusValue { get; }
 
-    private string Username { get; }
-    private string Email { get; }
-    private string PasswordHash { get; }
-    private string Role { get; }
-    private DateTime? LastLogin { get; }
-    public string GetEmail => Email;
-    public string GetUsername => Username;
+    public bool IsActive { get; }
+    // public int? DepartmentID { get; }
+    // public int? DesignationID { get; }
+    // public int? CountryID { get; }
+    // public int? StateID { get; }
+    // public int? CityID { get; }
+    // public string AddedBy { get; }
+    // public DateTime? AddedOn { get; }
+    // public string UpdatedBy { get; }
+    // public DateTime? UpdatedOn { get; }
+    // public bool? IsDeleted { get; }
+    // public bool? IsSuperUser { get; }
+    // public bool? IsAllPrivilegeGranted { get; }
+    // public DateTime? InactiveDateTime { get; }
 }

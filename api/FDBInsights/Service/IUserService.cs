@@ -1,8 +1,8 @@
 using FDBInsights.Dto;
 
-namespace FDBInsights.Repositories;
+namespace FDBInsights.Service;
 
-public interface IUserRepository
+public interface IUserService
 {
     Task<UserInfo?> GetByEmailAsync(string email);
     Task<UserInfo?> GetByUserNameAsync(string userName);
