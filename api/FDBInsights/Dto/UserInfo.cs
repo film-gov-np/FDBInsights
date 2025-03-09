@@ -1,16 +1,12 @@
 namespace FDBInsights.Dto;
 
-public class UserInfo
+public class UserInfo(string email, string fullName, string jwtToken)
 {
-    public UserInfo(string email, string fullName)
-    {
-        Email = email;
-        FullName = fullName;
-    }
-
-    private string Email { get; }
-    private string FullName { get; }
+    private string Email { get; } = email;
+    private string FullName { get; } = fullName;
+    private string JwtToken { get; } = jwtToken;
     public string GetUserEmail => Email;
 
     public string GetUserFullName => FullName;
+    public string? GetJwtToken => JwtToken;
 }
