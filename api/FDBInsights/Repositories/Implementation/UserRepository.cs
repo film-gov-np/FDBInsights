@@ -13,7 +13,15 @@ public class UserRepository(ApplicationDbContext dbContext) : IUserRepository
         var user = await _dbContext.Users
             .FirstOrDefaultAsync(u => u.Email == email);
         if (user == null) return null;
-        var userInfo = new UserInfo(user.Email, user.FullName);
-        return userInfo;
+        return new UserInfo(user.Email, user.FullName, null);
+    }
+
+    public async Task<UserInfo?> GetByUserNameAsync(string userName)
+    {
+        var user = await _dbContext.Users
+            .AsNoTracking()
+            .FirstOrDefaultAsync(u => u.UserName == userName);
+        if (user == null) return null;
+        return new UserInfo(user.Email, user.FullName, null);
     }
 }

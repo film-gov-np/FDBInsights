@@ -5,4 +5,5 @@ namespace FDBInsights.Repositories;
 public interface IUserRepository
 {
     Task<UserInfo?> GetByEmailAsync(string email);
+    Task<UserInfo?> GetByUserNameAsync(string userName);
 }
