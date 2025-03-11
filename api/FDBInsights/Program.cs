@@ -1,6 +1,7 @@
 using FastEndpoints;
 using FDBInsights.Common;
 using FDBInsights.Data;
+using FDBInsights.Models;
 using FDBInsights.Repositories;
 using FDBInsights.Repositories.Implementation;
 using FDBInsights.Service;
@@ -21,11 +22,13 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddFastEndpoints();
 
 // Register application services
+builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddLogging();
 builder.Services.AddScoped<BaseEndpointCore>();
+builder.Services.AddScoped<IJwtRepository, JwtRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 // Add controllers for backward compatibility (can be removed if fully migrating to FastEndpoints)
 builder.Services.AddControllers();
