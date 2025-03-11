@@ -18,7 +18,7 @@ public class BaseEndpointCore
     public UserInfo? CurrentUser => _httpContextAccessor.HttpContext?.Items["user"] as UserInfo;
     public string CurrentUserEmail => CurrentUser?.GetUserEmail ?? string.Empty;
     public string CurrentUserFullName => CurrentUser?.GetUserFullName ?? string.Empty;
-    public string? CurrentUserJwtToken => CurrentUser?.GetJwtToken ?? string.Empty;
+    public string? CurrentUserJwtToken => CurrentUser?.GetUserJwtToken ?? string.Empty;
 
     // get the current user from the http context
     public string HostUrl
