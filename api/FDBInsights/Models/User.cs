@@ -7,11 +7,11 @@ public class User
     public string FullName { get; set; }
     public string Email { get; private set; }
     public string UserName { get; set; }
-    public string Password { get; }
+    public string Password { get; private set; }
     public string Address { get; }
     public string Phone { get; }
     public string Mobile { get; }
-    public string RoleID { get; }
+    public string RoleID { get; private set; }
     public string Image { get; }
     public DateTime? ExpiryDate { get; }
     public int? StatusValue { get; }
