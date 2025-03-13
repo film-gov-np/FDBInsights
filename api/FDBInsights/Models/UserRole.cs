@@ -2,15 +2,15 @@ namespace FDBInsights.Models;
 
 public class UserRole
 {
-    public int RoleID { get; set; }
+    public int RoleID { get; init; }
 
-    public string Name { get; set; }
+    public string Name { get; init; }
 
-    public bool? DefaultRole { get; set; }
-    public string Remarks { get; set; }
-    public string InsertedBy { get; set; }
-    public DateTime InsertedDate { get; set; }
-    public string UpdatedBy { get; set; }
+    public bool? DefaultRole { get; init; }
+    public string Remarks { get; init; }
+    public string InsertedBy { get; init; }
+    public DateTime InsertedDate { get; init; }
+    public string UpdatedBy { get; init; }
 
-    public DateTime? UpdatedDate { get; set; }
+    public DateTime? UpdatedDate { get; init; }
 }

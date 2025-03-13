@@ -11,6 +11,6 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        modelBuilder.Entity<UserRole>().HasNoKey();
+        modelBuilder.Entity<UserRole>().HasKey("RoleID");
     }
 }

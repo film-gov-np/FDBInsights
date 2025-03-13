@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FDBInsights.Repositories.Implementation;
 
-public class UserRepository(ApplicationDbContext dbContext) : IUserRepository
+public class UserRepository(ApplicationDbContext dbContext) : GenericRepository<User>(dbContext), IUserRepository
 {
     private readonly ApplicationDbContext _dbContext = dbContext;
 
@@ -34,6 +34,6 @@ public class UserRepository(ApplicationDbContext dbContext) : IUserRepository
                 .ToListAsync();
         }
 
-        return new UserInfo(user.UserID, user.Email, user.FullName, user.Password, userRoles);
+        return new UserInfo(user.UserID, user.Email, user.FullName, user.Password, user.RoleID);
     }
 }
