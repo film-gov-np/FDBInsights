@@ -26,7 +26,7 @@ public class JwtRepository(ApplicationDbContext dbContext, IOptions<AppSettings>
             new(ClaimTypes.Name, userInfo.GetUserEmail)
         };
 
-        claimList.AddRange(userInfo.GetUserRoles.Select(role => new Claim(ClaimTypes.Role, role)));
+        claimList.AddRange(userInfo.GetUserRoles.Select(role => new Claim(ClaimTypes.Role, role.Name)));
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Audience = _appSettings.Audience,
