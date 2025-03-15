@@ -1,5 +1,5 @@
 namespace FDBInsights.Features;
 
-public record AuthRequest(string username, string password);
+public record AuthRequest(string Username, string Password);
 
-public record AuthResponse(string jwtToken, string refreshToken);
+public record AuthResponse(string JwtToken, string RefreshToken);
