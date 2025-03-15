@@ -5,17 +5,18 @@ using System.Text;
 using FDBInsights.Data;
 using FDBInsights.Dto;
 using FDBInsights.Models;
+using FDBInsights.Service;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
-namespace FDBInsights.Service.Implementation;
+namespace FDBInsights.Repositories.Implementation;
 
 public class JwtRepository(ApplicationDbContext dbContext, IOptions<AppSettings> appSettings) : IJwtRepository
 {
     private readonly AppSettings _appSettings = appSettings.Value;
     private readonly ApplicationDbContext _dbContext = dbContext;
 
-    public async Task<string> GenerateJwtTokenAsync(UserInfo userInfo, CancellationToken cancellationToken = default)
+    public Task<string> GenerateJwtTokenAsync(UserInfo userInfo, CancellationToken cancellationToken = default)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
@@ -31,17 +32,18 @@ public class JwtRepository(ApplicationDbContext dbContext, IOptions<AppSettings>
         {
             Audience = _appSettings.Audience,
             Issuer = _appSettings.Issuer,
+            Expires = DateTime.UtcNow.AddMinutes(_appSettings.TokenExpirationInMinutes),
+            NotBefore = DateTime.UtcNow,
             Subject = new ClaimsIdentity(claimList),
-            Expires = DateTime.Now.AddMinutes(_appSettings.ExpiresInMinutes),
             SigningCredentials =
                 new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
         };
         var token = tokenHandler.CreateToken(tokenDescriptor);
-        return tokenHandler.WriteToken(token);
+        return Task.FromResult(tokenHandler.WriteToken(token));
     }
 
 
-    public async Task<RefreshToken> GenerateRefreshTokenAsync(UserInfo userInfo,
+    public Task<RefreshToken> GenerateRefreshTokenAsync(UserInfo userInfo,
         CancellationToken cancellationToken = default)
     {
         var refreshToken = new RefreshToken
@@ -57,6 +59,6 @@ public class JwtRepository(ApplicationDbContext dbContext, IOptions<AppSettings>
         // ensure token is unique by checking against db
         /* To Do */
 
-        return refreshToken;
+        return Task.FromResult(refreshToken);
     }
 }
