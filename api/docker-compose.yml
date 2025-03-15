@@ -1,0 +1,16 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5002:8080"
+      - "544:443"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+    networks:
+      - insights-network
+networks:
+  insights-network:
+    driver: bridge
+    
