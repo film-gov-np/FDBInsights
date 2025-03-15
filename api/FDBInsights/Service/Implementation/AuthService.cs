@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using ErrorOr;
 using FDBInsights.Common.Helper;
 using FDBInsights.Data;
 using FDBInsights.Dto;
@@ -21,7 +22,12 @@ public class AuthService(
     private readonly IRoleRepository _roleRepository = roleRepository;
     private readonly IUserRepository _userRepository = userRepository;
 
-    public async Task<AuthResponse?> GetByUserNameAsync(string userName, string password,
+    public Task<User?> GetByEmailAsync(string email)
+    {
+        return _userRepository.GetByEmailAsync(email);
+    }
+
+    public async Task<ErrorOr<AuthResponse>> GetByUserNameAsync(string userName, string password,
         CancellationToken cancellationToken = default)
     {
         Expression<Func<User, bool>> predicate = user => user.UserName == userName;
@@ -33,8 +39,10 @@ public class AuthService(
             user.Password,
             user.RoleID, null, null);
         var user = await _userRepository.GetByPropertyAsync(a, selector, cancellationToken);
-        if (user == null || user.GetUserPassword != Encrypter.OneWayEncrypter(password)) return null;
-        if (string.IsNullOrEmpty(user.GetUserRolesString)) return new AuthResponse("", "");
+        if (user == null) return Error.NotFound("UserNotFound", "User not found");
+        if (user.GetUserPassword != Encrypter.OneWayEncrypter(password))
+            return Error.Validation("UserPasswordMismatch", "User password mismatch");
+        if (string.IsNullOrEmpty(user.GetUserRolesString)) return Error.Forbidden("NoRoles", "User has no roles");
         var roleIds = user.GetUserRolesString.Split(',')
             .Select(int.Parse)
             .ToList();
@@ -49,10 +57,5 @@ public class AuthService(
         var jwtToken = await _jwtRepository.GenerateJwtTokenAsync(user, cancellationToken);
         var refreshToken = await _jwtRepository.GenerateRefreshTokenAsync(user, cancellationToken);
         return new AuthResponse(jwtToken, refreshToken.Token);
-    }
-
-    public Task<User?> GetByEmailAsync(string email)
-    {
-        return _userRepository.GetByEmailAsync(email);
     }
 }
