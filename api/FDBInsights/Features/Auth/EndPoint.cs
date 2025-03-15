@@ -15,6 +15,8 @@ public class AuthEndpoint(IAuthService userService, BaseEndpointCore baseEndpoin
     public override void Configure()
     {
         Post("/auth/login");
+        Options(x => x.CacheOutput(p => p.Expire(TimeSpan.FromSeconds(60))));
+        ResponseCache(60);
         AllowAnonymous();
         Summary(s =>
         {
@@ -47,15 +49,13 @@ public class AuthEndpoint(IAuthService userService, BaseEndpointCore baseEndpoin
                         return;
                 }
 
-                await SendAsync(new ApiResponse<AuthResponse>(
-                    null,
-                    result.FirstError.Description,
-                    (int)httpStatusCode, false), (int)httpStatusCode, ct);
+                await SendAsync(ApiResponse<AuthResponse>.ErrorResponse(
+                    result.FirstError.Description), (int)httpStatusCode, ct);
                 return;
             }
 
             GetSetTokenCookie(result.Value.JwtToken, result.Value.RefreshToken);
-            await SendAsync(new ApiResponse<AuthResponse>(
+            await SendAsync(ApiResponse<AuthResponse>.SuccessResponse(
                 result.Value), (int)HttpStatusCode.OK, ct);
         }
         catch (Exception e)
