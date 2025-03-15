@@ -1,4 +1,3 @@
-import BoxOfficeTable from "./BoxOfficeTable";
 import TableData from "./TableData";
 
 export default function Dashboard() {
@@ -7,7 +6,6 @@ export default function Dashboard() {
       <h1>Dashboard</h1>
 
       <TableData />
-      {/* <BoxOfficeTable /> */}
     </div>
   );
 }

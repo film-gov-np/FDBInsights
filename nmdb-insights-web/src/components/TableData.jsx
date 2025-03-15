@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 
-// Mock data for the box office table
 const data = [
   {
     date: "Mar 10",
