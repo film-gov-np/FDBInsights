@@ -4,16 +4,10 @@ using FDBInsights.Dto;
 
 namespace FDBInsights.Common;
 
-public class BaseEndpointCore
+public class BaseEndpointCore(ILogger<BaseEndpointCore> logger, IHttpContextAccessor httpContextAccessor)
 {
-    public readonly IHttpContextAccessor _httpContextAccessor;
-    public readonly ILogger _logger;
-
-    public BaseEndpointCore(ILogger<BaseEndpointCore> logger, IHttpContextAccessor httpContextAccessor)
-    {
-        _httpContextAccessor = httpContextAccessor;
-        _logger = logger;
-    }
+    public readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
+    public readonly ILogger _logger = logger;
 
     public UserInfo? CurrentUser => _httpContextAccessor.HttpContext?.Items["user"] as UserInfo;
     public string CurrentUserEmail => CurrentUser?.GetUserEmail ?? string.Empty;
