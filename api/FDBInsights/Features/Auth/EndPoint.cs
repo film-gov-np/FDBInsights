@@ -1,3 +1,5 @@
+using System.Net;
+using ErrorOr;
 using FDBInsights.Common;
 using FDBInsights.Constants;
 using FDBInsights.Service;
@@ -5,7 +7,7 @@ using FDBInsights.Service;
 namespace FDBInsights.Features.Auth;
 
 public class AuthEndpoint(IAuthService userService, BaseEndpointCore baseEndpointCore)
-    : BaseEndpoint<AuthRequest, AuthResponse>(baseEndpointCore)
+    : BaseEndpoint<AuthRequest, ApiResponse<AuthResponse>>(baseEndpointCore)
 {
     private readonly BaseEndpointCore _baseEndpointCore = baseEndpointCore;
     private readonly IAuthService _userService = userService;
@@ -27,17 +29,34 @@ public class AuthEndpoint(IAuthService userService, BaseEndpointCore baseEndpoin
     {
         try
         {
-            var authResponse = await _userService.GetByUserNameAsync(req.Username, req.Password, ct);
+            var result = await _userService.GetByUserNameAsync(req.Username, req.Password, ct);
 
-            if (authResponse == null)
+            if (result.IsError)
             {
-                await SendNotFoundAsync("User not found", ct);
+                var httpStatusCode = HttpStatusCode.Unauthorized;
+                switch (result.FirstError.Type)
+                {
+                    case ErrorType.NotFound:
+                        httpStatusCode = HttpStatusCode.NotFound;
+                        break;
+                    case ErrorType.Validation:
+                        httpStatusCode = HttpStatusCode.BadRequest;
+                        break;
+                    default:
+                        await SendErrorsAsync((int)HttpStatusCode.InternalServerError, ct);
+                        return;
+                }
+
+                await SendAsync(new ApiResponse<AuthResponse>(
+                    null,
+                    result.FirstError.Description,
+                    (int)httpStatusCode, false), (int)httpStatusCode, ct);
                 return;
             }
 
-            GetSetTokenCookie(authResponse.JwtToken, authResponse.RefreshToken);
-            await SendAsync(authResponse,
-                cancellation: ct);
+            GetSetTokenCookie(result.Value.JwtToken, result.Value.RefreshToken);
+            await SendAsync(new ApiResponse<AuthResponse>(
+                result.Value), (int)HttpStatusCode.OK, ct);
         }
         catch (Exception e)
         {
