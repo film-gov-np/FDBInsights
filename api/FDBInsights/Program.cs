@@ -30,7 +30,10 @@ builder.Services.AddCors(options =>
         });
 });
 // Add FastEndpoints
-builder.Services.AddFastEndpoints();
+builder.Services
+    .AddFastEndpoints()
+    .AddResponseCaching();
+
 
 // Register application services
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
@@ -62,7 +65,8 @@ app.UseCors("AllowSpecificOrigin");
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseHttpsRedirection();
-app.UseFastEndpoints(c => { c.Endpoints.RoutePrefix = "api"; });
+app.UseResponseCaching()
+    .UseFastEndpoints(c => { c.Endpoints.RoutePrefix = "api"; });
 
 // Keep controllers for backward compatibility
 app.MapControllers();
