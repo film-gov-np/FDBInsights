@@ -1,4 +1,5 @@
 using FDBInsights.Common;
+using FDBInsights.Constants;
 using FDBInsights.Service;
 
 namespace FDBInsights.Features.Auth;
@@ -26,7 +27,7 @@ public class AuthEndpoint(IAuthService userService, BaseEndpointCore baseEndpoin
     {
         try
         {
-            var authResponse = await _userService.GetByUserNameAsync(req.username, req.password, ct);
+            var authResponse = await _userService.GetByUserNameAsync(req.Username, req.Password, ct);
 
             if (authResponse == null)
             {
@@ -34,6 +35,7 @@ public class AuthEndpoint(IAuthService userService, BaseEndpointCore baseEndpoin
                 return;
             }
 
+            GetSetTokenCookie(authResponse.JwtToken, authResponse.RefreshToken);
             await SendAsync(authResponse,
                 cancellation: ct);
         }
@@ -42,5 +44,21 @@ public class AuthEndpoint(IAuthService userService, BaseEndpointCore baseEndpoin
             Console.WriteLine(e);
             throw;
         }
+    }
+
+    private void GetSetTokenCookie(string accessToken, string refreshToken = "")
+    {
+        var cookieOptions = new CookieOptions
+        {
+            HttpOnly = true,
+            Expires = DateTime.UtcNow.AddDays(7),
+            SameSite = SameSiteMode.None,
+            Secure = true
+        };
+        _httpContextAccessor.HttpContext?.Response.Cookies.Append(TokenConstants.RefreshToken, refreshToken,
+            cookieOptions);
+
+        _httpContextAccessor.HttpContext!.Response.Cookies.Append(TokenConstants.AccessToken, accessToken,
+            cookieOptions);
     }
 }
