@@ -17,7 +17,18 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         sqlServerOptions => sqlServerOptions.EnableRetryOnFailure()
     )
 );
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        corsPolicyBuilder =>
+        {
+            corsPolicyBuilder.WithOrigins("http://localhost:5173", "https://reports.film.gov.np",
+                    "https://insigths.nepalidev.com.np")
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials();
+        });
+});
 // Add FastEndpoints
 builder.Services.AddFastEndpoints();
 
@@ -47,6 +58,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"); });
 }
 
+app.UseCors("AllowSpecificOrigin");
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseHttpsRedirection();
