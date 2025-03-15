@@ -25,7 +25,7 @@ export function LoginForm({ className, ...props }) {
 
   const onSubmit = (data) => {
     axiosInstance
-      .post("/user/authenticate", data)
+      .post("/auth/login", data) // Ensure the endpoint is correct
       .then((response) => {
         if (response.data?.success) {
           reset(); // Reset the form fields
@@ -66,15 +66,15 @@ export function LoginForm({ className, ...props }) {
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
-                  id="email"
-                  type="email"
-                  placeholder="m@example.com"
+                  id="text"
+                  type="text"
+                  placeholder="email or username"
                   {...register("email", {
                     required: "Email is required",
-                    pattern: {
-                      value: /\S+@\S+\.\S+/,
-                      message: "Invalid email address",
-                    },
+                    // pattern: {
+                    //   value: /\S+@\S+\.\S+/,
+                    //   message: "Invalid email address",
+                    // },
                   })}
                 />
                 {errors.email && (
