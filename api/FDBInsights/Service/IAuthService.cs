@@ -1,5 +1,6 @@
 using ErrorOr;
 using FDBInsights.Features;
+using FDBInsights.Features.Auth;
 using FDBInsights.Models;
 
 namespace FDBInsights.Service;

@@ -3,7 +3,7 @@ using ErrorOr;
 using FDBInsights.Common.Helper;
 using FDBInsights.Data;
 using FDBInsights.Dto;
-using FDBInsights.Features;
+using FDBInsights.Features.Auth;
 using FDBInsights.Models;
 using FDBInsights.Repositories;
 using LinqKit;

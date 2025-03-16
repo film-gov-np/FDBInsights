@@ -1,6 +1,54 @@
 @FDBInsights_HostAddress = http://localhost:5090
+@apiPrefix = {{FDBInsights_HostAddress}}/api/v1
 
 GET {{FDBInsights_HostAddress}}/weatherforecast/
 Accept: application/json
+
+###
+
+# @name login
+POST {{apiPrefix}}/login
+Content-Type: application/json
+
+{
+  "userName": "admin",
+  "password": "admin123"
+}
+
+###
+
+@authToken = {{login.response.body.data.jwtToken}}
+
+# Test Movie Endpoint with Authorization
+POST {{apiPrefix}}/movies
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "id": 1,
+  "title": "The Matrix"
+}
+
+###
+
+# Test Movie Endpoint without Authorization (should fail with 401)
+POST {{apiPrefix}}/movies
+Content-Type: application/json
+
+{
+  "id": 1,
+  "title": "The Matrix"
+}
+
+###
+
+# Test Public Movie Endpoint (should work without authorization)
+POST {{apiPrefix}}/public/movies
+Content-Type: application/json
+
+{
+  "id": 2,
+  "title": "Inception"
+}
 
 ###

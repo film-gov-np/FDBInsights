@@ -15,7 +15,7 @@ public class AuthEndpoint(IAuthService userService, BaseEndpointCore baseEndpoin
     public override void Configure()
     {
         Post("/auth/login");
-        Options(x => x.CacheOutput(p => p.Expire(TimeSpan.FromSeconds(60))));
+        //Options(x => x.CacheOutput(p => p.Expire(TimeSpan.FromSeconds(60))));
         ResponseCache(60);
         AllowAnonymous();
         Summary(s =>

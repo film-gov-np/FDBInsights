@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace FDBInsights.Features.Auth;
 
-public class AuthValidation : Validator<AuthRequest>
+public class Validation : Validator<AuthRequest>
 {
-    public AuthValidation()
+    public Validation()
     {
         RuleFor(x => x.Username)
             .NotEmpty()

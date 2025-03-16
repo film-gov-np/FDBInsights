@@ -1,4 +1,4 @@
-namespace FDBInsights.Features;
+namespace FDBInsights.Features.Auth;
 
 public record AuthRequest(string Username, string Password);
 
