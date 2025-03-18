@@ -11,6 +11,10 @@ public interface IGenericRepository<T> where T : class
 
     Task<List<TResult>> GetAllAsync<TResult>(Expression<Func<T, bool>>? predicate = null,
         Expression<Func<T, TResult>>? selector = null,
+        string? filterPropertyName = null,
+        string? filterKeyword = null,
+        string? orderByPropertyName = null,
+        bool ascending = true,
         int? pageNumber = null,
         int? pageSize = null,
         CancellationToken cancellationToken = default);
