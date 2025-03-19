@@ -100,12 +100,12 @@ export default function LoginForm({ className, ...props }) {
               <Button type="submit" className="w-full" disabled={isSubmitting}>
                 {isSubmitting ? "Logging in..." : "Login"}
               </Button>
-              <div className="text-center text-xs sm:text-sm">
+              {/* <div className="text-center text-xs sm:text-sm">
                 Don&apos;t have an account?{" "}
                 <a href="#" className="underline underline-offset-4">
                   Sign up
                 </a>
-              </div>
+              </div> */}
             </div>
           </form>
         </CardContent>
