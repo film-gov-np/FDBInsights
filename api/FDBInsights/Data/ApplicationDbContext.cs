@@ -3,11 +3,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FDBInsights.Data;
 
-public class ApplicationDbContext : DbContext
+public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
 {
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
-    {
-    }
+    public DbSet<User> Users { get; set; }
+    public DbSet<UserRole> UserRole { get; set; }
 
-    public DbSet<User> Users => Set<User>();
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.Entity<UserRole>().HasKey("RoleID");
+    }
 }
