@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Paths } from "@/constants/routePaths";
 import axiosInstance from "@/helpers/axiosSetup";
 import { cn } from "@/lib/utils";
@@ -25,62 +25,72 @@ export default function LoginForm({ className, ...props }) {
 
   const onSubmit = (data) => {
     axiosInstance
-      .post("/user/authenticate", data)
+      .post("/auth/login", data) // Ensure the endpoint is correct
       .then((response) => {
         if (response.data?.success) {
-          reset();
+          reset(); // Reset the form fields
           navigate(Paths.Route_Dashboard);
         } else {
           console.error("Login unsuccessful");
+          reset(); // Reset the form fields even if login is unsuccessful
         }
       })
       .catch((error) => {
         console.error("Login error:", error);
+        reset(); // Reset the form fields in case of an error
       });
   };
 
   return (
     <div
-      className={cn("flex flex-col gap-6 w-full max-w-md mx-auto", className)}
+      className={cn(
+        "flex flex-col gap-6 w-full max-w-md mx-auto p-4",
+        className
+      )}
       {...props}
     >
       <Card className="overflow-hidden w-full">
-        <CardContent className="p-6 sm:p-8">
+        <CardContent className="p-6">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-6">
               <div className="flex flex-col items-center text-center">
-                <h1 className="text-2xl sm:text-3xl font-bold">Welcome back</h1>
-                <p className="text-sm sm:text-base text-balance text-muted-foreground">
+                <img
+                  src="/emblem_nepal.png"
+                  alt="Emblem of Nepal"
+                  className="w-24 h-24"
+                />
+                <p className="mt-3 text-sm text-balance text-muted-foreground">
                   Login to your NMDB account
                 </p>
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
-                  id="email"
-                  type="email"
-                  placeholder="m@example.com"
+                  id="text"
+                  type="text"
+                  placeholder="email or username"
                   {...register("email", {
                     required: "Email is required",
-                    pattern: {
-                      value: /\S+@\S+\.\S+/,
-                      message: "Invalid email address",
-                    },
+                    // pattern: {
+                    //   value: /\S+@\S+\.\S+/,
+                    //   message: "Invalid email address",
+                    // },
                   })}
                 />
                 {errors.email && (
                   <ErrorMessage message={errors.email.message} />
                 )}
               </div>
+
               <div className="grid gap-2">
                 <div className="flex items-center justify-between">
                   <Label htmlFor="password">Password</Label>
-                  <a
-                    href="#"
-                    className="text-xs sm:text-sm underline-offset-2 hover:underline"
+                  <Link
+                    to="#"
+                    className="text-xs underline-offset-2 hover:underline"
                   >
                     Forgot your password?
-                  </a>
+                  </Link>
                 </div>
                 <Input
                   id="password"
@@ -100,12 +110,6 @@ export default function LoginForm({ className, ...props }) {
               <Button type="submit" className="w-full" disabled={isSubmitting}>
                 {isSubmitting ? "Logging in..." : "Login"}
               </Button>
-              {/* <div className="text-center text-xs sm:text-sm">
-                Don&apos;t have an account?{" "}
-                <a href="#" className="underline underline-offset-4">
-                  Sign up
-                </a>
-              </div> */}
             </div>
           </form>
         </CardContent>
