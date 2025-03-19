@@ -5,7 +5,6 @@ using System.Text;
 using FDBInsights.Data;
 using FDBInsights.Dto;
 using FDBInsights.Models;
-using FDBInsights.Service;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
@@ -60,5 +59,37 @@ public class JwtRepository(ApplicationDbContext dbContext, IOptions<AppSettings>
         /* To Do */
 
         return Task.FromResult(refreshToken);
+    }
+
+    public ClaimsPrincipal? GetClaimsPrincipalFromToken(string token)
+    {
+        var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+        var tokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateAudience =
+                false, //you might want to validate the audience and issuer depending on your use case
+            ValidateIssuer = false,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(key),
+            ValidateLifetime = true //here we are saying that we don't care about the token's expiration date
+        };
+
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out var securityToken);
+        var jwtSecurityToken = securityToken as JwtSecurityToken;
+        if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256,
+                StringComparison.InvariantCultureIgnoreCase))
+            return null;
+        return principal;
+    }
+
+    public bool IsTokenExpired(string token)
+    {
+        var jwthandler = new JwtSecurityTokenHandler();
+        var jwttoken = jwthandler.ReadToken(token);
+        var expDate = jwttoken.ValidTo;
+        if (expDate < DateTime.UtcNow)
+            return true;
+        return false;
     }
 }
