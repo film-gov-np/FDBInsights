@@ -12,8 +12,8 @@ public class TheaterService(ITheaterRepository theaterRepository) : ITheaterServ
         CancellationToken cancellationToken = default)
     {
         var theater =
-            await _theaterRepository.GetAllAsync(null,
-                theater => new Theater
+            await _theaterRepository.GetAllAsync(
+                selector: theater => new Theater
                 {
                     TheaterID = theater.TheaterID, Name = theater.Name, TheaterCode = theater.TheaterCode,
                     BrandCode = theater.BrandCode, CityID = theater.CityID, Address = theater.Address

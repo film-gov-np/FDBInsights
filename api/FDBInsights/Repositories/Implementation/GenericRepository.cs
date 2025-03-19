@@ -33,11 +33,13 @@ public class GenericRepository<T>(ApplicationDbContext dbContext) : IGenericRepo
             ? _dbContext.Set<T>()
                 .AsNoTracking()
                 .Where(expression)
+                .TagWith(typeof(T).Name)
                 .Select(x => (TResult)(object)x)
                 .FirstOrDefaultAsync(cancellationToken)
             : _dbContext.Set<T>()
                 .AsNoTracking()
                 .Where(expression)
+                .TagWith(typeof(T).Name)
                 .Select(selector)
                 .FirstOrDefaultAsync(cancellationToken));
     }
@@ -56,7 +58,8 @@ public class GenericRepository<T>(ApplicationDbContext dbContext) : IGenericRepo
         var query = _dbContext.Set<T>().AsNoTracking();
         // Apply the additional filter predicate if provided
         if (predicate != null)
-            query = query.Where(predicate);
+            query = query.Where(predicate)
+                .TagWith(typeof(T).Name);
         // Apply dynamic filter (LIKE functionality) if filterValue is provided
         if (!string.IsNullOrEmpty(filterKeyword) && !string.IsNullOrEmpty(filterPropertyName))
         {
