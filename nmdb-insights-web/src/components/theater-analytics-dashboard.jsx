@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useCallback } from "react";
 
 import { TheaterHeader } from "./theater-header";
 
@@ -24,56 +25,140 @@ export default function TheaterAnalyticsDashboard() {
   const [selectedTimeFrame, setSelectedTimeFrame] = useState("daily");
   const [selectedTheater, setSelectedTheater] = useState("qfx");
   const [selectedScreen, setSelectedScreen] = useState("All Screens");
-  const [data, setData] = useState(theaterData.qfx.daily["All Screens"]);
+  const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  // Get the appropriate data based on selected theater, time frame, and screen
-  useEffect(() => {
-    updateData();
-  }, [selectedTimeFrame, selectedTheater, selectedScreen]);
-
-  const updateData = () => {
+  // Function to safely get data
+  const getTheaterData = useCallback(() => {
     try {
-      const newData =
-        theaterData[selectedTheater][selectedTimeFrame][selectedScreen];
-      setData(newData);
-    } catch (error) {
-      console.error("Error updating data:", error);
-      // Fallback to default data if there's an error
-      setData(theaterData.qfx.daily["All Screens"]);
+      // Make sure the theater exists
+      if (!theaterData[selectedTheater]) {
+        console.error(`Theater '${selectedTheater}' not found in data`);
+        return theaterData.qfx.daily["All Screens"]; // Fallback
+      }
+
+      // Make sure the time frame exists
+      if (!theaterData[selectedTheater][selectedTimeFrame]) {
+        console.error(
+          `Time frame '${selectedTimeFrame}' not found for theater '${selectedTheater}'`
+        );
+        return theaterData[selectedTheater].daily["All Screens"]; // Fallback
+      }
+
+      // Make sure the screen exists
+      if (!theaterData[selectedTheater][selectedTimeFrame][selectedScreen]) {
+        console.error(
+          `Screen '${selectedScreen}' not found for theater '${selectedTheater}' and time frame '${selectedTimeFrame}'`
+        );
+        return theaterData[selectedTheater][selectedTimeFrame]["All Screens"]; // Fallback
+      }
+
+      // Return the data if all checks pass
+      return theaterData[selectedTheater][selectedTimeFrame][selectedScreen];
+    } catch (err) {
+      console.error("Error getting theater data:", err);
+      return theaterData.qfx.daily["All Screens"]; // Fallback to default data
     }
-  };
+  }, [selectedTheater, selectedTimeFrame, selectedScreen]);
+
+  // Update data when selections change
+  useEffect(() => {
+    try {
+      setIsLoading(true);
+      setError(null);
+
+      // Simulate network delay
+      setTimeout(() => {
+        const newData = getTheaterData();
+        setData(newData);
+        setIsLoading(false);
+      }, 300);
+    } catch (err) {
+      console.error("Error in useEffect:", err);
+      setError("Failed to load data. Please try again.");
+      setIsLoading(false);
+    }
+  }, [selectedTimeFrame, selectedTheater, selectedScreen, getTheaterData]);
 
   // Handle refresh button click
-  const handleRefresh = () => {
+  const handleRefresh = useCallback(() => {
+    if (!data) return;
+
     setIsLoading(true);
+    setError(null);
 
     // Simulate API call with a delay
     setTimeout(() => {
-      // Generate refreshed data with slight variations
-      const refreshedData = refreshData(data);
-      setData(refreshedData);
-      setIsLoading(false);
+      try {
+        // Generate refreshed data with slight variations
+        const refreshedData = refreshData(data);
+        setData(refreshedData);
+      } catch (err) {
+        console.error("Error refreshing data:", err);
+        setError("Failed to refresh data. Please try again.");
+      } finally {
+        setIsLoading(false);
+      }
     }, 800); // Simulate network delay
-  };
+  }, [data]);
 
   // Handle theater change
-  const handleTheaterChange = (theater) => {
+  const handleTheaterChange = useCallback((theater) => {
+    console.log(`Changing theater to: ${theater}`);
     setSelectedTheater(theater);
-  };
+  }, []);
 
   // Handle time frame change
-  const handleTimeFrameChange = (timeFrame) => {
+  const handleTimeFrameChange = useCallback((timeFrame) => {
+    console.log(`Changing time frame to: ${timeFrame}`);
     setSelectedTimeFrame(timeFrame);
-  };
+  }, []);
 
   // Handle screen change
-  const handleScreenChange = (screen) => {
+  const handleScreenChange = useCallback((screen) => {
+    console.log(`Changing screen to: ${screen}`);
     setSelectedScreen(screen);
-  };
+  }, []);
+
+  // Show loading state if data is not yet loaded
+  if (!data && isLoading) {
+    return (
+      <div className="container mx-auto p-4 max-w-7xl">
+        <div className="flex justify-center items-center h-96">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+            <p>Loading data...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Show error state if there was an error
+  if (error) {
+    return (
+      <div className="container mx-auto p-4 max-w-7xl">
+        <div className="flex justify-center items-center h-96">
+          <div className="text-center text-red-500">
+            <p>{error}</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="mt-4 px-4 py-2 bg-primary text-white rounded-md"
+            >
+              Reload Page
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Use default data if data is still null
+  const displayData = data || theaterData.qfx.daily["All Screens"];
 
   return (
-    <div className="container mx-auto p-4 max-w-7xl ">
+    <div className="container mx-auto p-4 max-w-7xl">
       <TheaterHeader
         onRefresh={handleRefresh}
         onTheaterChange={handleTheaterChange}
@@ -91,7 +176,7 @@ export default function TheaterAnalyticsDashboard() {
           <DateRangeFilter
             selectedScreen={selectedScreen}
             onScreenChange={handleScreenChange}
-            dateRange={data.dateRange}
+            dateRange={displayData.dateRange}
           />
         </div>
 
@@ -100,30 +185,30 @@ export default function TheaterAnalyticsDashboard() {
             isLoading ? "opacity-50" : "opacity-100"
           }`}
         >
-          <MetricsCards metrics={data.metrics} />
+          <MetricsCards metrics={displayData.metrics} />
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
             <RevenueChart
-              data={data.revenueData}
+              data={displayData.revenueData}
               title={`${
                 selectedTimeFrame.charAt(0).toUpperCase() +
                 selectedTimeFrame.slice(1)
               } Revenue Trend`}
             />
             <TicketSalesChart
-              data={data.ticketData}
+              data={displayData.ticketData}
               title={`${
                 selectedTimeFrame.charAt(0).toUpperCase() +
                 selectedTimeFrame.slice(1)
               } Ticket Sales`}
             />
             <OccupancyChart
-              data={data.occupancyData}
+              data={displayData.occupancyData}
               title="Average Occupancy"
             />
           </div>
 
-          <MoviePerformanceTable data={data.movieData} />
+          <MoviePerformanceTable data={displayData.movieData} />
         </div>
       </div>
     </div>
