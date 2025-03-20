@@ -5,6 +5,7 @@ import Dashboard from "@/components/Dashboard";
 import NotFound from "@/components/NotFound";
 import React from "react";
 import { Paths } from "@/constants/routePaths";
+import TheaterAnalyticsDashboard from "./components/theater-analytics-dashboard";
 
 const router = createBrowserRouter([
   {
@@ -13,6 +14,10 @@ const router = createBrowserRouter([
     children: [
       { path: "", element: <App /> },
       { path: Paths.Route_Dashboard, element: <Dashboard /> },
+      {
+        path: Paths.Route_TheaterAnalytics,
+        element: <TheaterAnalyticsDashboard />,
+      },
 
       { path: "*", element: <NotFound /> },
     ],
