@@ -12,7 +12,7 @@ public class TheaterController(IMediator mediator) : AuthorizedController
 {
     private readonly IMediator _mediator = mediator;
 
-    [HttpGet("getTheaters")]
+    [HttpGet]
     [MapToApiVersion("1.0")]
     public async Task<IActionResult> GetTheaters([FromQuery] GetTheaterByNameQuery theaterByNameQuery,
         CancellationToken cancellationToken)

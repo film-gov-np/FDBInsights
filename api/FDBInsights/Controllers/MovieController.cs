@@ -1,5 +1,6 @@
 using Asp.Versioning;
 using FDBInsights.Common.Filter;
+using FDBInsights.Common.Helper;
 using FDBInsights.Constants;
 using FDBInsights.Features.Movie.Query;
 using MediatR;
@@ -11,8 +12,9 @@ namespace FDBInsights.Controllers;
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiVersion("1.0")]
 [RequiredRoles(AuthorizationConstants.AdminRole)]
-public class MovieController(IMediator mediator) : AuthorizedController
+public class MovieController(IMediator mediator, IDapperHelper dapperHelper) : AuthorizedController
 {
+    private readonly IDapperHelper _dapperHelper = dapperHelper;
     private readonly IMediator _mediator = mediator;
 
     [HttpGet]

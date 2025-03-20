@@ -1,5 +1,5 @@
 using Asp.Versioning;
-using FDBInsights.Common;
+using FDBInsights.Common.Helper;
 using FDBInsights.Data;
 using FDBInsights.Models;
 using FDBInsights.Repositories;
@@ -13,9 +13,10 @@ using Microsoft.OpenApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Configure database
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection"),
+        connectionString,
         sqlServerOptions => sqlServerOptions.EnableRetryOnFailure()
     )
 );
@@ -82,7 +83,9 @@ builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 // Register application services
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 builder.Services.AddLogging();
-builder.Services.AddScoped<BaseEndpointCore>();
+//builder.Services.AddTransient<DatabaseService>();
+builder.Services.AddSingleton<IDapperHelper>(c => new DapperHelper(connectionString));
+//builder.Services.AddScoped<BaseEndpointCore>();
 builder.Services.AddScoped<IGenericRepository<User>, GenericRepository<User>>();
 builder.Services.AddScoped<IGenericRepository<UserRole>, GenericRepository<UserRole>>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
@@ -93,6 +96,8 @@ builder.Services.AddScoped<IMovieService, MovieService>();
 builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 builder.Services.AddScoped<ITheaterRepository, TheaterRepository>();
 builder.Services.AddScoped<ITheaterService, TheaterService>();
+builder.Services.AddScoped<IReportRepository, ReportRepository>();
+builder.Services.AddScoped<IReportService, ReportService>();
 
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
