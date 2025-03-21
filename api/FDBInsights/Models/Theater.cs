@@ -8,4 +8,5 @@ public class Theater
     public string Name { get; set; }
     public string Address { get; set; }
     public int CityID { get; set; }
+    public bool IsDeleted { get; set; }
 }
