@@ -23,17 +23,12 @@ const router = createBrowserRouter([
     element: <MainLayout />,
     children: [
       { path: "", element: <App /> },
-      {
-        path: Paths.Route_Dashboard,
-        element: <ProtectedRoute />,
-        children: [
-          { path: "", element: <Dashboard /> },
-          {
-            path: Paths.Route_TheaterAnalytics,
-            element: <TheaterAnalyticsDashboard />,
-          }],
-      }, ,
 
+      { path: "", element: <Dashboard /> },
+      {
+        path: Paths.Route_TheaterAnalytics,
+        element: <TheaterAnalyticsDashboard />,
+      },
       { path: "*", element: <NotFound /> },
     ],
   },
