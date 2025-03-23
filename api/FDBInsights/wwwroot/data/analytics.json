@@ -1,0 +1,146 @@
+{
+  "1": {
+    "TotalCollections": 2500000,
+    "ActiveFilms": 8,
+    "ChangeInActiveFilms": 1,
+    "AverageOccupancy": 65,
+    "ChangeInAverageOccupancy": 2,
+    "TrendData": [
+      {
+        "Date": "2025-03-01T00:00:00",
+        "BoxOfficeCollection": 400000
+      },
+      {
+        "Date": "2025-03-08T00:00:00",
+        "BoxOfficeCollection": 500000
+      },
+      {
+        "Date": "2025-03-15T00:00:00",
+        "BoxOfficeCollection": 600000
+      }
+    ],
+    "TopMovies": [
+      {
+        "Title": "Nepali Blockbuster",
+        "GrossCollection": 800000
+      },
+      {
+        "Title": "Himalayan Adventure",
+        "GrossCollection": 600000
+      },
+      {
+        "Title": "Kathmandu Nights",
+        "GrossCollection": 500000
+      }
+    ],
+    "Reports": [
+      {
+        "Date": "2025-03-01T00:00:00",
+        "Collections": 400000,
+        "ChangeFromPrevious": 0,
+        "TopMovieCollection": 150000,
+        "OccupancyRate": 60
+      },
+      {
+        "Date": "2025-03-02T00:00:00",
+        "Collections": 420000,
+        "ChangeFromPrevious": 5,
+        "TopMovieCollection": 160000,
+        "OccupancyRate": 62
+      },
+      {
+        "Date": "2025-03-03T00:00:00",
+        "Collections": 440000,
+        "ChangeFromPrevious": 5,
+        "TopMovieCollection": 170000,
+        "OccupancyRate": 64
+      },
+      {
+        "Date": "2025-03-04T00:00:00",
+        "Collections": 460000,
+        "ChangeFromPrevious": 5,
+        "TopMovieCollection": 180000,
+        "OccupancyRate": 66
+      },
+      {
+        "Date": "2025-03-05T00:00:00",
+        "Collections": 480000,
+        "ChangeFromPrevious": 5,
+        "TopMovieCollection": 190000,
+        "OccupancyRate": 68
+      }
+    ]
+  },
+  "2": {
+    "TotalCollections": 5000000,
+    "ActiveFilms": 15,
+    "ChangeInActiveFilms": 2,
+    "AverageOccupancy": 70,
+    "ChangeInAverageOccupancy": 5,
+    "TrendData": [
+      {
+        "Date": "2025-03-01T00:00:00",
+        "BoxOfficeCollection": 1000000
+      },
+      {
+        "Date": "2025-03-08T00:00:00",
+        "BoxOfficeCollection": 1200000
+      },
+      {
+        "Date": "2025-03-15T00:00:00",
+        "BoxOfficeCollection": 1300000
+      }
+    ],
+    "TopMovies": [
+      {
+        "Title": "Nepali Blockbuster",
+        "GrossCollection": 1200000
+      },
+      {
+        "Title": "Himalayan Adventure",
+        "GrossCollection": 1000000
+      },
+      {
+        "Title": "Kathmandu Nights",
+        "GrossCollection": 900000
+      }
+    ],
+    "Reports": [
+      {
+        "Date": "2025-03-01T00:00:00",
+        "Collections": 1000000,
+        "ChangeFromPrevious": 0,
+        "TopMovieCollection": 300000,
+        "OccupancyRate": 70
+      },
+      {
+        "Date": "2025-03-02T00:00:00",
+        "Collections": 1020000,
+        "ChangeFromPrevious": 2,
+        "TopMovieCollection": 310000,
+        "OccupancyRate": 71
+      },
+      {
+        "Date": "2025-03-03T00:00:00",
+        "Collections": 1040000,
+        "ChangeFromPrevious": 2,
+        "TopMovieCollection": 320000,
+        "OccupancyRate": 72
+      },
+      {
+        "Date": "2025-03-04T00:00:00",
+        "Collections": 1060000,
+        "ChangeFromPrevious": 2,
+        "TopMovieCollection": 330000,
+        "OccupancyRate": 73
+      },
+      {
+        "Date": "2025-03-05T00:00:00",
+        "Collections": 1080000,
+        "ChangeFromPrevious": 2,
+        "TopMovieCollection": 340000,
+        "OccupancyRate": 74
+      }
+    ]
+  }
+}

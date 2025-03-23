@@ -3,7 +3,6 @@ using FDBInsights.Common;
 using FDBInsights.Constants;
 using FDBInsights.Service;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 
 namespace FDBInsights.Features.Auth.Commands;
 
@@ -16,7 +15,7 @@ public class LoginCommandHandler(IAuthService authService, IHttpContextAccessor 
     public async Task<ErrorOr<ApiResponse<AuthResponse>>> Handle(AuthCommand request,
         CancellationToken cancellationToken)
     {
-        var result = await _authService.GetByUserNameAsync(request.Username, request.Password);
+        var result = await _authService.GetByUserNameAsync(request.Username, request.Password, cancellationToken);
         if (result.IsError) return ApiResponse<AuthResponse>.ErrorResponse(result.Errors.First().Description);
         GetSetTokenCookie(result.Value);
         return ApiResponse<AuthResponse>.SuccessResponse(result.Value);
