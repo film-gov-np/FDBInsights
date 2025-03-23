@@ -9,6 +9,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<UserRole> UserRole { get; set; }
     public DbSet<Movies> Movie { get; set; }
     public DbSet<Theater> Theater { get; set; }
+    public DbSet<TicketTransaction> TicketTransaction { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -17,17 +17,17 @@ public class User
     public int? StatusValue { get; }
 
     public bool IsActive { get; }
-    // public int? DepartmentID { get; }
-    // public int? DesignationID { get; }
-    // public int? CountryID { get; }
-    // public int? StateID { get; }
-    // public int? CityID { get; }
-    // public string AddedBy { get; }
-    // public DateTime? AddedOn { get; }
-    // public string UpdatedBy { get; }
-    // public DateTime? UpdatedOn { get; }
-    // public bool? IsDeleted { get; }
-    // public bool? IsSuperUser { get; }
-    // public bool? IsAllPrivilegeGranted { get; }
-    // public DateTime? InactiveDateTime { get; }
+    public int? DepartmentID { get; }
+    public int? DesignationID { get; }
+    public int? CountryID { get; }
+    public int? StateID { get; }
+    public int? CityID { get; }
+    public string AddedBy { get; }
+    public DateTime? AddedOn { get; }
+    public string UpdatedBy { get; }
+    public DateTime? UpdatedOn { get; }
+    public bool? IsDeleted { get; }
+    public bool? IsSuperUser { get; }
+    public bool? IsAllPrivilegeGranted { get; }
+    public DateTime? InactiveDateTime { get; }
 }

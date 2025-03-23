@@ -101,7 +101,13 @@ builder.Services.AddScoped<IReportService, ReportService>();
 
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSignalR();
+builder.Services.AddSingleton<DashboardHub>();
+builder.Services.AddSingleton<SubscribeProductTableDependency>();
 
+
+// Register the multi-table change tracking service as a hosted service
+builder.Services.AddSingleton<string>(connectionString); // Register connection string
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -124,5 +130,18 @@ app.UseHttpsRedirection();
 
 // Keep controllers for backward compatibility
 app.MapControllers();
+app.MapHub<DashboardHub>("/dataHub");
+
+// Register the TableDependency service but catch any errors to prevent app crash
+try
+{
+    app.UseSqlTableDependency<SubscribeProductTableDependency>(connectionString);
+    Console.WriteLine("SQL Table Dependency configured successfully");
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"Error configuring SQL Table Dependency: {ex.Message}");
+    // Allow application to continue even if table dependency setup fails
+}
 
 app.Run();
