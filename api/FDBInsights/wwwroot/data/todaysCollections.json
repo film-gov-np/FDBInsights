@@ -1,0 +1,137 @@
+[
+  {
+    "Name": "Big Movies",
+    "Location": "City Centre, Kathmandu",
+    "Total": {
+      "Revenue": 720000.00,
+      "OccupancyPercentage": 78.00,
+      "ChangePercentage": "+12.8"
+    },
+    "Movies": [
+      {
+        "Name": "Himalayan Heights",
+        "Total": {
+          "Revenue": 280000.00,
+          "OccupancyPercentage": 78.00,
+          "ChangePercentage": "+12.8"
+        }
+      },
+      {
+        "Name": "Kathmandu Dreams",
+        "Total": {
+          "Revenue": 240000.00,
+          "OccupancyPercentage": 75.00,
+          "ChangePercentage": "+9.5"
+        }
+      }
+    ]
+  },
+  {
+    "Name": "One Cinemas",
+    "Location": "Eyeplex Mall, Baneshwor, Kathmandu",
+    "Total": {
+      "Revenue": 530000.00,
+      "OccupancyPercentage": 75.00,
+      "ChangePercentage": "+11.2"
+    },
+    "Movies": [
+      {
+        "Name": "Village Tales",
+        "Total": {
+          "Revenue": 160000.00,
+          "OccupancyPercentage": 68.00,
+          "ChangePercentage": "+6.2"
+        }
+      },
+      {
+        "Name": "River's Journey",
+        "Total": {
+          "Revenue": 175000.00,
+          "OccupancyPercentage": 70.00,
+          "ChangePercentage": "+8.5"
+        }
+      }
+    ]
+  },
+  {
+    "Name": "iNi Cinemas",
+    "Location": "Baneshwor Mall, Kathmandu",
+    "Total": {
+      "Revenue": 380000.00,
+      "OccupancyPercentage": 65.00,
+      "ChangePercentage": "+7.5"
+    },
+    "Movies": [
+      {
+        "Name": "Himalayan Heights",
+        "Total": {
+          "Revenue": 155000.00,
+          "OccupancyPercentage": 65.00,
+          "ChangePercentage": "+7.5"
+        }
+      },
+      {
+        "Name": "Village Tales",
+        "Total": {
+          "Revenue": 125000.00,
+          "OccupancyPercentage": 62.00,
+          "ChangePercentage": "+3.2"
+        }
+      }
+    ]
+  },
+  {
+    "Name": "QFX Labim",
+    "Location": "Labim Mall, Lalitpur",
+    "Total": {
+      "Revenue": 825000.00,
+      "OccupancyPercentage": 85.00,
+      "ChangePercentage": "+15.2"
+    },
+    "Movies": [
+      {
+        "Name": "Himalayan Heights",
+        "Total": {
+          "Revenue": 325000.00,
+          "OccupancyPercentage": 85.00,
+          "ChangePercentage": "+15.2"
+        }
+      },
+      {
+        "Name": "Kathmandu Dreams",
+        "Total": {
+          "Revenue": 280000.00,
+          "OccupancyPercentage": 78.00,
+          "ChangePercentage": "+12.8"
+        }
+      }
+    ]
+  },
+  {
+    "Name": "Friends Cinemas",
+    "Location": "Dharan",
+    "Total": {
+      "Revenue": 320000.00,
+      "OccupancyPercentage": 62.00,
+      "ChangePercentage": "+4.2"
+    },
+    "Movies": [
+      {
+        "Name": "Village Tales",
+        "Total": {
+          "Revenue": 90000.00,
+          "OccupancyPercentage": 55.00,
+          "ChangePercentage": "-1.2"
+        }
+      },
+      {
+        "Name": "Himalayan Heights",
+        "Total": {
+          "Revenue": 120000.00,
+          "OccupancyPercentage": 62.00,
+          "ChangePercentage": "+4.2"
+        }
+      }
+    ]
+  }
+]

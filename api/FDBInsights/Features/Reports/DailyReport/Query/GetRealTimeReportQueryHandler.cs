@@ -1,15 +1,23 @@
 using ErrorOr;
 using FDBInsights.Common;
+using FDBInsights.Dto.Reports.DailyReport;
+using FDBInsights.Service;
 using MediatR;
 
 namespace FDBInsights.Features.Reports.DailyReport.Query;
 
 public class
-    GetRealTimeReportQueryHandler : IRequestHandler<GetRealTimeReportQuery, ErrorOr<ApiResponse<List<RealTimeReports>>>>
+    GetRealTimeReportQueryHandler(IReportService reportService) : IRequestHandler<GetRealTimeReportQuery,
+    ErrorOr<ApiResponse<List<DailyTheaterReportDto>>>>
 {
-    public Task<ErrorOr<ApiResponse<List<RealTimeReports>>>> Handle(GetRealTimeReportQuery request,
+    private readonly IReportService _reportService = reportService;
+
+    public async Task<ErrorOr<ApiResponse<List<DailyTheaterReportDto>>>> Handle(GetRealTimeReportQuery request,
         CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var result = await _reportService.GetRealTimeReportAsync(cancellationToken);
+        if (result.IsError)
+            return ApiResponse<List<DailyTheaterReportDto>>.ErrorResponse(result.Errors.First().Description);
+        return ApiResponse<List<DailyTheaterReportDto>>.SuccessResponse(result.Value);
     }
 }
