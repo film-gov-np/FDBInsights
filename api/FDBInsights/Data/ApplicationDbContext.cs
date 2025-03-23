@@ -16,7 +16,9 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         modelBuilder.Entity<UserRole>().HasKey("RoleID");
         modelBuilder.Entity<Movies>().HasKey("MovieID");
         modelBuilder.Entity<Movies>(entity => { entity.ToTable("movie", "fdb"); });
+        modelBuilder.Entity<Movies>().HasQueryFilter(entity => !entity.IsDeleted);
         modelBuilder.Entity<Theater>().HasKey("TheaterID");
+        modelBuilder.Entity<Theater>().HasQueryFilter(entity => !entity.IsDeleted);
         modelBuilder.Entity<Theater>(entity => { entity.ToTable("theater", "fdb"); });
     }
 }
