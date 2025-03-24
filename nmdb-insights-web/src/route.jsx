@@ -6,6 +6,7 @@ import NotFound from "@/components/NotFound";
 import React from "react";
 import { Paths } from "@/constants/routePaths";
 import TheaterAnalyticsDashboard from "./components/theater-analytics-dashboard";
+import SideMenuLayout from "./components/layouts/SideMenuLayout";
 
 // Mock authentication function (replace with real auth logic)
 const isAuthenticated = () => {
@@ -24,14 +25,21 @@ const router = createBrowserRouter([
     children: [
       { path: "", element: <App /> },
 
-      { path: "", element: <Dashboard /> },
+
+      { path: "*", element: <NotFound /> },
+    ],
+  },
+  {
+    path: Paths.Route_Home,
+    element: <SideMenuLayout />,
+    children: [
+      { path: Paths.Route_Dashboard, element: <Dashboard /> },
       {
         path: Paths.Route_TheaterAnalytics,
         element: <TheaterAnalyticsDashboard />,
       },
-      { path: "*", element: <NotFound /> },
-    ],
-  },
+    ]
+  }
 ]);
 
 export default router;
