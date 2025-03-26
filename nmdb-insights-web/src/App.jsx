@@ -1,11 +1,22 @@
-import LoginForm from "./components/ui/login";
+import { RouterProvider } from "react-router-dom";
+import router from "./route";
+import { useState } from "react";
+import { AuthContext } from "./contexts/authContext";
 
-function App() {
+const App = () => {
+  const [isAuthorized, setIsAuthorized] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [userInfo, setUserInfo] = useState(null);
+
   return (
     <>
-      <LoginForm />
+      <AuthContext.Provider
+        value={{ isAuthorized, userInfo, setUserInfo, setIsAuthorized }}
+      >
+        <RouterProvider router={router} />
+      </AuthContext.Provider>
     </>
   );
-}
+};
 
 export default App;

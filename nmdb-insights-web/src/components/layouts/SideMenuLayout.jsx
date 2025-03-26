@@ -26,12 +26,12 @@ import axiosInstance from "@/helpers/axiosSetup";
 import SideMenu from "../menu/SideMenu";
 // import { ApiPaths } from "@/constants/apiPaths";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { useAuthContext } from "@/contexts/authContext";
 // import Logo from "../common/Logo";
 
 const SideMenuLayout = () => {
     const navigate = useNavigate();
-    //   const { isAuthorized, userInfo, setIsAuthorized } = useAuthContext();
-    const isAuthorized = true, userInfo = null
+    const { isAuthorized, userInfo, setIsAuthorized } = useAuthContext();
     const logOutFromServer = () => {
         navigate(Paths.Route_Home);
         // axiosInstance.post(ApiPaths.Path_Session).then((resp) => {
@@ -90,7 +90,7 @@ const SideMenuLayout = () => {
                                         {
                                             <Avatar className="flex h-8 w-8 text-center">
                                                 <AvatarImage
-                                                    src={userInfo?.profilePhotoUrl ?? ""}
+                                                    src={userInfo?.imageUrl ?? ""}
                                                     alt="Avatar"
                                                 />
                                                 <AvatarFallback>
@@ -117,11 +117,11 @@ const SideMenuLayout = () => {
                                             </div>
                                         </NavLink>
                                     </DropdownMenuLabel>
-                                    <DropdownMenuSeparator />
-                                    <DropdownMenuItem asChild>
+                                    {/* <DropdownMenuSeparator /> */}
+                                    {/* <DropdownMenuItem asChild>
                                         <NavLink to={Paths.Route_Home}>Visit Website</NavLink>
-                                    </DropdownMenuItem>
-                                    <DropdownMenuSeparator />
+                                    </DropdownMenuItem> */}
+                                    {/* <DropdownMenuSeparator /> */}
                                     {/* <DropdownMenuItem className="flex gap-2">
                                         Theme<ModeToggle></ModeToggle>
                                     </DropdownMenuItem> */}

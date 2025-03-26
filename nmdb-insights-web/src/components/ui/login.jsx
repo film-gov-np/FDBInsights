@@ -9,12 +9,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useAuthContext } from "@/contexts/authContext";
 
 const ErrorMessage = ({ message }) => (
   <p className="text-red-500 text-sm mt-1">{message}</p>
 );
 
 export default function LoginForm({ className, ...props }) {
+  const { setIsAuthorized, setUserInfo } = useAuthContext();
   const navigate = useNavigate();
   const {
     register,
@@ -27,17 +29,19 @@ export default function LoginForm({ className, ...props }) {
     axiosInstance
       .post("/auth/login", data) // Ensure the endpoint is correct
       .then((response) => {
-        if (response.data?.success) {
-          reset(); // Reset the form fields
+        if (response?.data?.isSuccess) {
+          setIsAuthorized(true);
+          setUserInfo(response?.data?.user); //  set logged in user data which can be used across the app
+          //reset(); // Reset the form fields
           navigate(Paths.Route_Dashboard);
         } else {
           console.error("Login unsuccessful");
-          reset(); // Reset the form fields even if login is unsuccessful
+          //reset(); // Reset the form fields even if login is unsuccessful
         }
       })
       .catch((error) => {
         console.error("Login error:", error);
-        reset(); // Reset the form fields in case of an error
+        //reset(); // Reset the form fields in case of an error
       });
   };
 
@@ -64,12 +68,12 @@ export default function LoginForm({ className, ...props }) {
                 </p>
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="username">Email</Label>
                 <Input
                   id="text"
                   type="text"
                   placeholder="email or username"
-                  {...register("email", {
+                  {...register("username", {
                     required: "Email is required",
                     // pattern: {
                     //   value: /\S+@\S+\.\S+/,

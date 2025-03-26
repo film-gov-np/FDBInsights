@@ -5,7 +5,7 @@ import "./MainLayout.css";
 const MainLayout = () => {
   return (
     <div className="bg-zinc-300 h-screen w-full flex flex-col items-center">
-      <header className="w-full">
+      {/* <header className="w-full">
         <nav className="navbar">
           <ul className="flex justify-center space-x-4">
             <li className="flex-1 text-center">
@@ -22,7 +22,7 @@ const MainLayout = () => {
             </li>
           </ul>
         </nav>
-      </header>
+      </header> */}
       <main className="flex-1 w-full">
         <Outlet />
       </main>
