@@ -11,7 +11,7 @@ namespace FDBInsights.Controllers;
 [ApiVersion("1.0")]
 public class AuthController(IMediator mediator) : ControllerBase
 {
-    [HttpPost("authenticate")]
+    [HttpPost("login")]
     [MapToApiVersion("1.0")]
     [AllowAnonymous]
     public async Task<IActionResult> Login(AuthCommand command)
