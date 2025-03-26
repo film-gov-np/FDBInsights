@@ -41,7 +41,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowSpecificOrigin",
         corsPolicyBuilder =>
         {
-            corsPolicyBuilder.WithOrigins("http://localhost:5173", "https://reports.film.gov.np",
+            corsPolicyBuilder.WithOrigins("http://localhost:5173", "https://reports.film.gov.np","http://10.5.4.49:3002",
                     "https://insigths.nepalidev.com.np")
                 .AllowAnyHeader()
                 .AllowAnyMethod()
