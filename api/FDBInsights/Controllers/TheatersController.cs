@@ -8,7 +8,7 @@ namespace FDBInsights.Controllers;
 [ApiController]
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiVersion("1.0")]
-public class TheaterController(IMediator mediator) : AuthorizedController
+public class TheatersController(IMediator mediator) : AuthorizedController
 {
     private readonly IMediator _mediator = mediator;
 
