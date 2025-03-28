@@ -1,7 +1,8 @@
 import { RouterProvider } from "react-router-dom";
 import router from "./route";
 import { useState } from "react";
-import { AuthContext } from "./contexts/authContext";
+import { AuthContext } from "./contexts/AuthContext";
+// import { AuthContext } from "./contexts/authContext";
 
 const App = () => {
   const [isAuthorized, setIsAuthorized] = useState(false);

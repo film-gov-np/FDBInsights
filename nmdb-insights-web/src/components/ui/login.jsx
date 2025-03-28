@@ -9,7 +9,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useAuthContext } from "@/contexts/authContext";
+import { useAuthContext } from "@/contexts/AuthContext";
+// import { useAuthContext } from "@/contexts/authContext";
 
 const ErrorMessage = ({ message }) => (
   <p className="text-red-500 text-sm mt-1">{message}</p>
