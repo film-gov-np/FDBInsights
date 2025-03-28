@@ -1,14 +1,22 @@
+import { RouterProvider } from "react-router-dom";
+import router from "./route";
 import { useState } from "react";
-import Login from "./components/Login";
+import { AuthContext } from "./contexts/authContext";
 
-function App() {
-  const [count, setCount] = useState(0);
+const App = () => {
+  const [isAuthorized, setIsAuthorized] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [userInfo, setUserInfo] = useState(null);
 
   return (
-    <div>
-      <Login />
-    </div>
+    <>
+      <AuthContext.Provider
+        value={{ isAuthorized, userInfo, setUserInfo, setIsAuthorized }}
+      >
+        <RouterProvider router={router} />
+      </AuthContext.Provider>
+    </>
   );
-}
+};
 
 export default App;
