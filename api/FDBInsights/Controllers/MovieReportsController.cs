@@ -14,11 +14,11 @@ namespace FDBInsights.Controllers;
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiVersion("1.0")]
 [ApiVersion("2.0")]
-public class MovieReportController(IMediator mediator) : AuthorizedController
+public class MovieReportsController(IMediator mediator) : AuthorizedController
 {
     private readonly IMediator _mediator = mediator;
 
-    [HttpGet("getMovieReportByTheater")]
+    [HttpGet("byTheater")]
     [MapToApiVersion("1.0")]
     public async Task<IActionResult> GetMovieReportByTheater([FromQuery] GetMovieReportByTheaterQuery query,
         CancellationToken cancellationToken)
@@ -35,7 +35,7 @@ public class MovieReportController(IMediator mediator) : AuthorizedController
         return result.Match(Ok, Problem);
     }
 
-    [HttpGet("analyticsReport")]
+    [HttpGet("analytics")]
     [MapToApiVersion("1.0")]
     public async Task<IActionResult> GetAnalyticsReport([FromQuery] AnalyticsReportQuery query,
         CancellationToken cancellationToken)
