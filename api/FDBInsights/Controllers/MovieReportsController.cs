@@ -34,8 +34,8 @@ public class MovieReportsController(IMediator mediator) : AuthorizedController
         var result = await _mediator.Send(new GetRealTimeReportQuery(), cancellationToken);
         return result.Match(Ok, Problem);
     }
-
-    [HttpGet("analyticsReport")]
+    
+    [HttpGet("analytics")]
     [MapToApiVersion("1.0")]
     public async Task<IActionResult> GetAnalyticsReport([FromQuery] AnalyticsReportQuery query,
         CancellationToken cancellationToken)
